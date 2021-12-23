@@ -1,0 +1,44 @@
+{% extends "player/base.html" %} 
+{% block title %}<title>Messages</title>{% endblock title%}
+{% block app_content %} 
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/profile_style.css' %}">
+
+
+<div class="ps-3">
+<div class='col-md-5'>  
+{% if messages %}
+<table class="table table-transparent">
+    {% for message in messages %}
+    <tr>
+        <td style="width: 128px">
+            {% if message.sender.avatar %}
+            <img class="avatar" src="{{ message.sender.avatar.url}}"> 
+            {% else %}
+            <img class="avatar" src="/media/avatars/default.jpg">
+            {% endif %}
+        </td>
+        <td>
+            <p class="fs-6"> <span class="text-muted">
+                <a href="{% url 'accounts:profile' message.sender.id %}"
+                >{{ message.sender.username }}</a>
+             at {{ message.timestamp }}:</span></p>
+            <p class="fs-5">{{ message.body }}</p>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+    <p class="fs-5">No messages are available.</p>
+    <hr>
+{% endif %}
+</div></div></div>
+
+
+
+{% if messages %}
+{% include 'accounts/message/_pagination_messages.html' %}
+<br>
+{% endif %}
+
+{% endblock app_content %}

@@ -1,0 +1,12 @@
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li id="message-flash"
+            {% if message.tags %}
+                class="text-center alert alert-{{ message.tags }}">
+            {% endif %}           
+            {{ message }}             
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %} 

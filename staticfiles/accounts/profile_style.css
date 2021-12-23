@@ -1,0 +1,49 @@
+body {
+    background: url("images/bg_profile.png") no-repeat;
+    background-size:cover; 
+    color: #F6CF57;
+}
+
+.table {
+    color:  #F6CF57;
+    border:1px ;
+    border-spacing:0;
+    border-collapse: collapse;
+}
+
+table td {
+  border: 1px #F6CF57;   
+}
+
+.alert {
+    positition: relative;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0px);
+    transition: visibility 0s, opacity 250ms, transform 250ms;
+}
+.alert.hide {
+    positition: relative;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px); // translateX, translateY, translateZ works well
+    transition: visibility 0s 250ms, opacity 250ms, transform 250ms;
+}
+
+li a {
+    color: #F6CF57;
+    text-decoration: none;
+    outline: none;
+
+}
+a {
+    color: #F6CF57;
+    text-decoration:none; 
+    cursor:pointer; 
+
+}
+a:hover {
+    color:#00A0C6; 
+    text-decoration:none; 
+    cursor:pointer;  
+}

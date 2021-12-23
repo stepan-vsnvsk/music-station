@@ -1,0 +1,100 @@
+{% extends "player/base.html" %} 
+{% block title %}<title>Profile</title>{% endblock title%}
+{% load crispy_forms_tags %}
+{% block app_content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/profile_style.css' %}">
+
+<div>
+{% include 'accounts/_message.html' %}
+</div>
+
+<div class=container>
+    <table>
+        <tr>
+            <td style="width: 130px;"> 
+            {% if user_profile.avatar %}                
+                <img class="avatar" src="{{ user_profile.avatar.url}}">    
+            {% else %}
+                <img class="avatar" src="/media/avatars/default.jpg">
+            {% endif %}
+            </td>
+            <td>                
+                <h1>User: {{ user_profile.username }}</h1>
+                <p>{{ user_profile.customuser_set.count }} following,
+                 {{ user_profile.follower.count }} followers.</p>
+                <p>Since {{ user_profile.date_joined }} here</p>
+                <p>Last login: {{ user_profile.last_login }} </p>
+                <br>
+                {% if  user.id != user_profile.id %}                
+                <a href="{% url 'accounts:send_message' user_profile.id %}">Send a private message</a>
+                {% endif %}
+
+                {% if user.id == user_profile.id %}
+                    <p><a href="{% url 'accounts:messages' user.id %}">Messages</a>                   
+                    {% if new_private_messages %}
+                    <span class="badge bg-warning text-dark">{{ new_private_messages.count }}</span>
+                    {% endif %}</p>                    
+                    <p><a href="{% url 'accounts:edit_profile' user.id %}">Edit Profile</a></p>
+                {% else %}
+                    {% if user_profile not in user.customuser_set.all %}
+                    <p>
+                        <form action="{% url 'accounts:profile' user_profile.id %}" method="post">
+                        {% csrf_token %}                        
+                        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                        {{ form_class | crispy }}
+                        <input type="submit" class="btn btn-outline-warning" value="Follow">
+                        </form>                   
+                    </p>
+                    {%  else %}
+                    <p>
+                        <form action="{% url 'accounts:profile' user_profile.id %}" method="post">
+                        {% csrf_token %}                        
+                        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+                        {{ form_class | crispy }}
+                        <input type="submit" class="btn btn-outline-info" value="Unfollow">
+                        </form>                   
+                    </p>
+                    {% endif %}
+
+                {% endif %}
+            </td> 
+        </tr>                 
+    </table>
+</div>
+
+<br><br><br>
+
+<!-- user's posts -->
+{% with posts=posts_paginated %}
+    {% if posts %}
+    <div class='col-md-5 ms-auto'>    
+    {% for post in posts %}
+    <div class='card text-white bg-transparent border-secondary'>        
+        <div class="card-header">
+            <span class="font-weight-bold">
+                <a href="{% url 'posts:discussion' post.question.id %}">
+                {{ post.question.question_text }}</a></span> &middot 
+            <span class="text-muted">at {{ post.timestamp }}:</span>
+        </div>
+        <div class="card-body">
+            <span class="fs-5">{{ post.body }}</span>
+        </div>
+    {% if user.id == user_profile.id%}
+        <div class="card-footer text-muted">
+            <a href="{% url 'posts:edit_post' post.id %}?next={{ request.path }}">Edit</a> |
+            <a href="{% url 'posts:delete_post' post.id %}?next={{ request.path }}">Delete</a>
+        </div>       
+    {% endif %}
+    {% endfor %}
+    </div>
+    {% with page_obj=posts_paginated %}
+    {% include 'accounts/message/_pagination_messages.html' %}
+    {% endwith %}    
+    </div>    
+    {% else %} <!-- if no posts -->
+    <p class="fs-5 ps-5"> No posts </p>
+    {% endif %}
+    {% endwith %}
+
+{% endblock app_content %}

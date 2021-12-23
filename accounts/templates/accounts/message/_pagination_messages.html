@@ -1,0 +1,38 @@
+<div class="pagination ms-3 fs-6">
+    <span class="step-links">
+        <!-- if two pages show only prev and next -->
+        {% if page_obj.paginator.num_pages < 3 %}
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}"><-previous</a>
+            {% endif %}
+            <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next-></a>
+            {% endif %}
+        {% else %}
+        <!-- if  more than 2 pages show first and last also
+            but only if they !=  prev and next -->
+            {% if page_obj.has_previous %}
+                {% if page_obj.previous_page_number != 1%}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>   
+                {% else %}
+                <a href="?page=1">&laquo; first</a>
+                {% endif %}
+            {% endif %}
+            <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+            {% if page_obj.has_next %}                
+                {% if page_obj.has_next and page_obj.has_next != page_obj.paginator.num_pages %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% else %}
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                {% endif %}
+            {% endif %}
+        {% endif %}
+</span>
+</div>

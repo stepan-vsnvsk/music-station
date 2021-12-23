@@ -1,0 +1,22 @@
+{% extends "player/base.html" %} 
+{% block title %}<title>Sending message</title>{% endblock title%} 
+{% load crispy_forms_tags %}
+{% block app_content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/profile_style.css' %}">
+
+<br>
+<div class="ms-5" >
+<h1>Send message to {{ recipient }}</h1>
+<br>
+
+    <div class="col-md-3">
+    <form action="" method="post">
+        {% csrf_token %}        
+        {{ form | crispy }}
+        <br>
+        <button class="btn btn-outline-warning ml-2" type="submit">Send message</button>
+    </form>
+    </div>
+</div>
+{% endblock %}

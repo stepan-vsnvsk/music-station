@@ -1,0 +1,20 @@
+{% extends "player/base.html" %} 
+{% block title %}<title>Edit profile</title>{% endblock %}
+{% load crispy_forms_tags %}
+
+{% block app_content %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/profile_style.css' %}">
+
+
+
+<div class="col-md-3 ps-5">
+<h1>Edit Profile</h1>
+<form enctype="multipart/form-data" method="post">
+{% csrf_token %}
+{{ form | crispy }}
+<br>
+<button class="btn btn-info ml-2" type="submit">Update</button>
+</form>
+</div>
+{% endblock app_content %}

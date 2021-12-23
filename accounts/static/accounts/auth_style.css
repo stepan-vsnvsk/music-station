@@ -1,0 +1,17 @@
+body {
+    background: url("images/bg_registration.gif") no-repeat;
+    background-size:cover; 
+    color: skyblue;
+}
+
+a {
+    color: lightskyblue; 
+    text-decoration:none; 
+    cursor:pointer;  
+}
+
+a:hover {
+    color: ghostwhite; 
+    text-decoration:none; 
+    cursor:pointer;  
+}
