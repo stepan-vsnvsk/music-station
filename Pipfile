@@ -11,6 +11,11 @@ psycopg2 = "*"
 environs = {extras = ["django"], version = "*"}
 whitenoise = "*"
 gunicorn = "*"
+djangorestframework = "*"
+dj-rest-auth = "*"
+pyyaml = "*"
+uritemplate = "*"
+drf-yasg = "*"
 
 [dev-packages]
 

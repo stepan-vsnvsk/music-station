@@ -41,10 +41,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'whitenoise.runserver_nostatic', # serve static files for production
     'django.contrib.staticfiles',
+    # local apps    
     'accounts',
     'posts',
     'player',
+    'api',
+    # 3-rd party apps
     'crispy_forms',
+    'rest_framework', 
+    'rest_framework.authtoken', 
+    'dj_rest_auth', # API authentification
+    'drf_yasg', # API docs generator
 ]
 
 MIDDLEWARE = [
@@ -162,3 +169,13 @@ SECURE_HSTS_PRELOAD = True
 SECURE_HSTS_SECONDS = 360000 
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 """
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',        
+        'rest_framework.authentication.TokenAuthentication', 
+        ],
+}

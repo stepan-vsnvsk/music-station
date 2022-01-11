@@ -17,10 +17,29 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import permissions 
+from drf_yasg.views import get_schema_view 
+from drf_yasg import openapi 
+
+# API schema
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Web Station API",
+        default_version="v1",
+        description="API for Music Station data",
+        ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),    
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('posts/', include('posts.urls', namespace='posts')),
     path('', include('player.urls', namespace='player')),
+    path('api/', include('api.urls', namespace='api')),
+    path('api-auth/', include('rest_framework.urls')), # basic auth
+    path('api/dj-rest-auth/', include('dj_rest_auth.urls')), # token auth    
+    path('api-doc/', schema_view.with_ui(
+        'swagger', cache_timeout=0), name='schema-swagger-ui'), # api docs 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
