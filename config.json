@@ -1,0 +1,1 @@
+{"URL": "http://localhost:8000/", "browser_name": "None", "image_path": "./tests/log_images/", "image_extension": ".png", "wait_timeout": 5, "flags": {"incognito": "True", "jenkins": "True", "maximize_window": "True"}}
