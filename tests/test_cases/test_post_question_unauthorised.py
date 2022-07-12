@@ -20,6 +20,7 @@ def test_post_question_unauthorised():
     log.info("Step 2: Click the 'Ask public' button.")
     home_page.click_ask_public()    
     login_page = LoginPage()
+    driver_util.screenshot('login_page')  
     assert login_page.is_page_open(), \
         "Can't open 'Login' page' " \
         "Expected result: Login page is opened"
